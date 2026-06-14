@@ -6,6 +6,7 @@ use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\PromotionController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\CatalogController as AdminCatalogController;
 use App\Http\Controllers\Admin\PortfolioController as AdminPortfolioController;
 use App\Http\Controllers\Admin\ConsultationController as AdminConsultationController;
+use App\Http\Controllers\Admin\PromotionController as AdminPromotionController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\OrderController;
 
@@ -28,6 +30,15 @@ Route::get('/consultation', [ConsultationController::class, 'create'])->name('co
 Route::post('/consultation', [ConsultationController::class, 'store'])->name('consultation.store');
 Route::view('/about', 'pages.about')->name('about');
 Route::view('/contact', 'pages.contact')->name('contact');
+
+// ===== LEGAL ROUTES =====
+Route::get('/privacy-policy', [App\Http\Controllers\LegalController::class, 'privacyPolicy'])->name('privacy-policy');
+Route::get('/terms-conditions', [App\Http\Controllers\LegalController::class, 'termsConditions'])->name('terms-conditions');
+
+// ===== SERVICES ROUTES =====
+Route::get('/services/measurement', [ServiceController::class, 'measurement'])->name('services.measurement');
+Route::get('/services/custom-design', [ServiceController::class, 'customDesign'])->name('services.custom-design');
+Route::get('/services/large-scale', [ServiceController::class, 'largeScale'])->name('services.large-scale');
 
 // ===== AUTH ROUTES =====
 Route::middleware('guest')->group(function () {
@@ -56,28 +67,47 @@ Route::prefix('admin')->name('admin.')->middleware('admin')->group(function () {
     // Dashboard
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     
-    // User Management (Super Admin only)
+    // User Management
     Route::resource('users', AdminUserController::class);
     
     // Catalog Management
-    Route::get('/catalogs', [AdminCatalogController::class, 'index'])->name('catalogs.index');
-    Route::get('/catalogs/create', [AdminCatalogController::class, 'create'])->name('catalogs.create');
-    Route::post('/catalogs', [AdminCatalogController::class, 'store'])->name('catalogs.store');
-    Route::get('/catalogs/{id}/edit', [AdminCatalogController::class, 'edit'])->name('catalogs.edit');
-    Route::put('/catalogs/{id}', [AdminCatalogController::class, 'update'])->name('catalogs.update');
-    Route::delete('/catalogs/{id}', [AdminCatalogController::class, 'destroy'])->name('catalogs.destroy');
+    Route::prefix('catalogs')->name('catalogs.')->group(function () {
+        Route::get('/', [AdminCatalogController::class, 'index'])->name('index');
+        Route::get('/create', [AdminCatalogController::class, 'create'])->name('create');
+        Route::post('/', [AdminCatalogController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [AdminCatalogController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [AdminCatalogController::class, 'update'])->name('update');
+        Route::delete('/{id}', [AdminCatalogController::class, 'destroy'])->name('destroy');
+        Route::patch('/{id}/toggle-status', [AdminCatalogController::class, 'toggleStatus'])->name('toggle-status');
+    });
     
     // Portfolio Management
-    Route::get('/portfolios', [AdminPortfolioController::class, 'index'])->name('portfolios.index');
-    Route::get('/portfolios/create', [AdminPortfolioController::class, 'create'])->name('portfolios.create');
-    Route::post('/portfolios', [AdminPortfolioController::class, 'store'])->name('portfolios.store');
-    Route::get('/portfolios/{id}/edit', [AdminPortfolioController::class, 'edit'])->name('portfolios.edit');
-    Route::put('/portfolios/{id}', [AdminPortfolioController::class, 'update'])->name('portfolios.update');
-    Route::delete('/portfolios/{id}', [AdminPortfolioController::class, 'destroy'])->name('portfolios.destroy');
+    Route::prefix('portfolios')->name('portfolios.')->group(function () {
+        Route::get('/', [AdminPortfolioController::class, 'index'])->name('index');
+        Route::get('/create', [AdminPortfolioController::class, 'create'])->name('create');
+        Route::post('/', [AdminPortfolioController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [AdminPortfolioController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [AdminPortfolioController::class, 'update'])->name('update');
+        Route::delete('/{id}', [AdminPortfolioController::class, 'destroy'])->name('destroy');
+        Route::patch('/{id}/toggle-status', [AdminPortfolioController::class, 'toggleStatus'])->name('toggle-status');
+        Route::patch('/{id}/toggle-featured', [AdminPortfolioController::class, 'toggleFeatured'])->name('toggle-featured');
+    });
     
     // Consultation Management
-    Route::get('/consultations', [AdminConsultationController::class, 'index'])->name('consultations.index');
-    Route::get('/consultations/{id}', [AdminConsultationController::class, 'show'])->name('consultations.show');
-    Route::patch('/consultations/{id}/status', [AdminConsultationController::class, 'updateStatus'])->name('consultations.status');
-    Route::delete('/consultations/{id}', [AdminConsultationController::class, 'destroy'])->name('consultations.destroy');
+    Route::prefix('consultations')->name('consultations.')->group(function () {
+        Route::get('/', [AdminConsultationController::class, 'index'])->name('index');
+        Route::get('/{id}', [AdminConsultationController::class, 'show'])->name('show');
+        Route::patch('/{id}/status', [AdminConsultationController::class, 'updateStatus'])->name('status');
+        Route::delete('/{id}', [AdminConsultationController::class, 'destroy'])->name('destroy');
+    });
+    
+    // Promotion Management
+    Route::prefix('promotions')->name('promotions.')->group(function () {
+        Route::get('/', [AdminPromotionController::class, 'index'])->name('index');
+        Route::get('/create', [AdminPromotionController::class, 'create'])->name('create');
+        Route::post('/', [AdminPromotionController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [AdminPromotionController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [AdminPromotionController::class, 'update'])->name('update');
+        Route::delete('/{id}', [AdminPromotionController::class, 'destroy'])->name('destroy');
+    });
 });

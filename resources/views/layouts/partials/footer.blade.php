@@ -16,9 +16,20 @@
                 <p class="text-gray-500 text-sm leading-relaxed mb-4">
                     Solusi lengkap untuk proyek furnitur skala besar — dari konsultasi, pengukuran, hingga desain interior yang presisi.
                 </p>
+                <div class="flex gap-3">
+                    <a href="#" class="text-gray-400 hover:text-black transition">
+                        <i class="ti ti-brand-instagram text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-black transition">
+                        <i class="ti ti-brand-linkedin text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-black transition">
+                        <i class="ti ti-brand-whatsapp text-xl"></i>
+                    </a>
+                </div>
             </div>
             
-            {{-- Quick Links --}}
+            {{-- Tentang --}}
             <div>
                 <h4 class="font-semibold text-black mb-4">Tentang</h4>
                 <ul class="space-y-2">
@@ -29,41 +40,61 @@
                 </ul>
             </div>
             
-            {{-- Layanan --}}
+            {{-- Layanan (Updated with clickable links) --}}
             <div>
                 <h4 class="font-semibold text-black mb-4">Layanan</h4>
                 <ul class="space-y-2">
-                    <li><span class="text-gray-500 text-sm">Pengukuran Presisi</span></li>
-                    <li><span class="text-gray-500 text-sm">Desain Kustom</span></li>
-                    <li><span class="text-gray-500 text-sm">Proyek Skala Besar</span></li>
-                    <li><span class="text-gray-500 text-sm">Konsultasi Profesional</span></li>
+                    <li><a href="{{ route('services.measurement') }}" class="text-gray-500 text-sm hover:text-black transition flex items-center gap-1">
+                        <i class="ti ti-ruler text-xs"></i> Pengukuran Presisi
+                    </a></li>
+                    <li><a href="{{ route('services.custom-design') }}" class="text-gray-500 text-sm hover:text-black transition flex items-center gap-1">
+                        <i class="ti ti-pencil text-xs"></i> Desain Kustom
+                    </a></li>
+                    <li><a href="{{ route('services.large-scale') }}" class="text-gray-500 text-sm hover:text-black transition flex items-center gap-1">
+                        <i class="ti ti-building text-xs"></i> Proyek Skala Besar
+                    </a></li>
+                    <li><a href="{{ route('consultation') }}" class="text-gray-500 text-sm hover:text-black transition flex items-center gap-1">
+                        <i class="ti ti-headset text-xs"></i> Konsultasi Profesional
+                    </a></li>
                 </ul>
             </div>
             
             {{-- Kontak --}}
             <div>
                 <h4 class="font-semibold text-black mb-4">Hubungi Kami</h4>
-                <ul class="space-y-2">
-                    <li class="flex items-center gap-2 text-gray-500 text-sm">
-                        <i class="ti ti-map-pin text-black"></i> Yogyakarta, Indonesia
+                <ul class="space-y-3">
+                    <li class="flex items-start gap-2 text-gray-500 text-sm">
+                        <i class="ti ti-map-pin text-black mt-0.5"></i>
+                        <span>Yogyakarta, Indonesia</span>
                     </li>
                     <li class="flex items-center gap-2 text-gray-500 text-sm">
-                        <i class="ti ti-phone text-black"></i> +62 838-4402-9190
+                        <i class="ti ti-phone text-black"></i>
+                        <a href="tel:+6283844029190" class="hover:text-black transition">+62 838-4402-9190</a>
                     </li>
                     <li class="flex items-center gap-2 text-gray-500 text-sm">
-                        <i class="ti ti-mail text-black"></i> info@spaceint.id
+                        <i class="ti ti-mail text-black"></i>
+                        <a href="mailto:info@spaceint.id" class="hover:text-black transition">info@spaceint.id</a>
                     </li>
                 </ul>
-                <div class="flex gap-4 mt-4">
-                    <a href="#" class="text-gray-400 hover:text-black transition"><i class="ti ti-brand-instagram text-xl"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-black transition"><i class="ti ti-brand-linkedin text-xl"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-black transition"><i class="ti ti-brand-whatsapp text-xl"></i></a>
+                <div class="mt-4 pt-4 border-t border-gray-100">
+                    <p class="text-xs text-gray-400">Jam Operasional</p>
+                    <p class="text-xs text-gray-500 mt-1">Senin - Sabtu: 08.00 - 17.00</p>
+                    <p class="text-xs text-red-500">Minggu: Tutup</p>
                 </div>
             </div>
         </div>
         
-        <div class="border-t border-gray-100 mt-8 pt-8 text-center text-gray-400 text-xs">
-            © 2026 SpaceINT. All rights reserved.
+        <div class="border-t border-gray-100 mt-8 pt-8">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-center text-gray-400 text-xs">
+                <div>
+                    © {{ date('Y') }} SpaceINT. All rights reserved.
+                </div>
+                <div class="flex items-center gap-3">
+                    <a href="{{ route('privacy-policy') }}" class="hover:text-black transition">Kebijakan Privasi</a>
+                    <span class="text-gray-300">|</span>
+                    <a href="{{ route('terms-conditions') }}" class="hover:text-black transition">Syarat & Ketentuan</a>
+                </div>
+            </div>
         </div>
     </div>
 </footer>
