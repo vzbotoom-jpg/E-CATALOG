@@ -124,6 +124,128 @@
     </div>
 </section>
 
+{{-- PORTFOLIO PREVIEW SECTION =====
+     Halaman ini punya menu "Portfolio" di navbar tapi belum ada preview
+     visualnya di Home — padahal untuk proyek furnitur skala besar,
+     bukti visual hasil kerja adalah social proof paling kuat.
+     CATATAN: ganti route('portfolio') sesuai nama route asli project
+     kamu kalau berbeda, dan ganti gambar placeholder dengan foto proyek nyata.
+--}}
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-12 gap-4">
+            <div>
+                <div class="inline-block px-3 py-1 bg-black/5 rounded-full text-xs text-gray-500 mb-4">
+                    ✦ Portfolio
+                </div>
+                <h2 class="text-3xl font-bold text-black mb-2">Proyek yang Sudah Kami Kerjakan</h2>
+                <p class="text-gray-500 max-w-xl">Sebagian dokumentasi hasil kerja nyata dari klien residential, perkantoran, hingga hotel</p>
+            </div>
+            <a href="{{ route('portfolio') }}" class="text-black font-medium hover:underline whitespace-nowrap">
+                Lihat semua portfolio →
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            @php
+                $portfolioPreview = [
+                    ['title' => 'Interior Kantor Modern', 'category' => 'Perkantoran', 'img' => 'https://placehold.co/500x400/e5e5e5/333333?text=Office+Project'],
+                    ['title' => 'Furnitur Kamar Hotel', 'category' => 'Hotel', 'img' => 'https://placehold.co/500x400/e5e5e5/333333?text=Hotel+Project'],
+                    ['title' => 'Interior Residensial', 'category' => 'Residential', 'img' => 'https://placehold.co/500x400/e5e5e5/333333?text=Residential+Project'],
+                ];
+            @endphp
+            @foreach($portfolioPreview as $item)
+            <div class="group rounded-2xl overflow-hidden border border-gray-100 hover:shadow-lg transition">
+                <div class="aspect-[4/3] overflow-hidden bg-gray-100">
+                    <img src="{{ $item['img'] }}" alt="{{ $item['title'] }}"
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                </div>
+                <div class="p-5">
+                    <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">{{ $item['category'] }}</span>
+                    <h3 class="font-bold text-black mt-1">{{ $item['title'] }}</h3>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+{{-- TESTIMONIALS SECTION =====
+     Ini elemen yang paling penting dan sebelumnya sama sekali tidak ada
+     di seluruh halaman SpaceINT — padahal untuk proyek bernilai besar
+     (perkantoran, hotel), calon klien butuh bukti pihak ketiga sebelum
+     berani konsultasi. Ganti isi array di bawah dengan testimoni klien asli.
+--}}
+<section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <div class="inline-block px-3 py-1 bg-black/5 rounded-full text-xs text-gray-500 mb-4">
+                ✦ Testimoni
+            </div>
+            <h2 class="text-3xl font-bold text-black mb-4">Apa Kata Klien Kami</h2>
+            <p class="text-gray-500 max-w-2xl mx-auto">Kepercayaan klien adalah aset paling berharga bagi kami</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            @php
+                $testimonials = [
+                    ['name' => 'Budi Hartono', 'role' => 'Manajer Operasional, Perusahaan Swasta', 'quote' => 'Pengukuran presisi dan desain kustomnya sangat membantu proyek renovasi kantor kami. Semua sesuai timeline yang dijanjikan.'],
+                    ['name' => 'Sarah Wijaya', 'role' => 'F&B Manager, Hotel Bintang 4', 'quote' => 'Furnitur kamar hotel yang dipesan sesuai spesifikasi dan tahan lama. Tim SpaceINT sangat profesional dari awal hingga instalasi.'],
+                    ['name' => 'Andi Pratama', 'role' => 'Pemilik Properti Residensial', 'quote' => 'Konsultasi gratisnya membantu saya menentukan solusi terbaik tanpa tekanan. Hasil akhirnya melebihi ekspektasi.'],
+                ];
+            @endphp
+            @foreach($testimonials as $t)
+            <div class="bg-white rounded-2xl p-6 border border-gray-100 flex flex-col">
+                <div class="flex gap-1 mb-4">
+                    @for($i = 0; $i < 5; $i++)
+                        <i class="ti ti-star-filled text-black text-sm"></i>
+                    @endfor
+                </div>
+                <p class="text-gray-600 text-sm leading-relaxed mb-6 flex-1">&ldquo;{{ $t['quote'] }}&rdquo;</p>
+                <div class="flex items-center gap-3 pt-4 border-t border-gray-100">
+                    <div class="w-10 h-10 rounded-full bg-black text-white font-bold flex items-center justify-center text-sm flex-shrink-0">
+                        {{ strtoupper(substr($t['name'], 0, 1)) }}
+                    </div>
+                    <div class="min-w-0">
+                        <p class="font-semibold text-black text-sm truncate">{{ $t['name'] }}</p>
+                        <p class="text-gray-400 text-xs truncate">{{ $t['role'] }}</p>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+{{-- TRUST BAR SECTION =====
+     Strip singkat untuk menghilangkan keraguan instan sebelum CTA akhir.
+     CATATAN: jangan cantumkan klaim sertifikasi/legalitas (mis. "PT/CV
+     Berbadan Hukum", "Bersertifikat ISO") kalau memang belum benar-benar
+     dimiliki SpaceINT — ganti/hapus butir itu sesuai fakta.
+--}}
+<section class="py-12 bg-white border-y border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+            @foreach([
+                ['ti-shield-check', 'Garansi Kepuasan', 'Setiap proyek dilengkapi garansi tertulis'],
+                ['ti-map-pin', 'Survei Lokasi', 'Pengukuran langsung di lokasi Anda'],
+                ['ti-clock', 'Respon Cepat', 'Konsultasi dibalas dalam 1x24 jam'],
+                ['ti-headset', 'Tanpa Komitmen', 'Konsultasi awal 100% gratis'],
+            ] as [$icon, $title, $desc])
+            <div class="flex items-start gap-3">
+                <div class="w-10 h-10 bg-black/5 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <i class="ti {{ $icon }} text-black text-lg"></i>
+                </div>
+                <div class="min-w-0">
+                    <p class="font-semibold text-black text-sm leading-snug">{{ $title }}</p>
+                    <p class="text-gray-500 text-xs mt-0.5 leading-relaxed">{{ $desc }}</p>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
 {{-- CTA SECTION --}}
 <section class="py-20 bg-black relative overflow-hidden">
     <div class="absolute inset-0 opacity-10">
